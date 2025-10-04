@@ -192,9 +192,9 @@ workspace.Bed.Touched:Connect(function(hit)
 	local hita = hit.Parent
 	if hita.Parent:IsA("Model") then
 
-		local anim = game.Players:GetPlayerFromCharacter(hita).Character.Humanoid.Animator:LoadAnimation(script.SleepAnimation)
+		local anim = hita.Humanoid.Animator:LoadAnimation(script.SleepAnimation)
 		
-		game.Players:GetPlayerFromCharacter(hita).Character.Humanoid.Jumping:Connect(function()
+		hita.Character.Humanoid.Jumping:Connect(function()
 
 			anim:Stop()
 
@@ -214,3 +214,4 @@ while true do
 		GotoAPath()
 	end)
 end
+
