@@ -64,8 +64,8 @@ function GotoAPath()
 
 	-- Calculate a random target position
 	local targetPos = Wayparts[math.random(1,#Wayparts)].Position + Vector3.new(math.random(1,5),0,math.random(1,5))
-	
-	
+
+
 	NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, targetPos)
 	IsIdle = false
 
@@ -102,18 +102,18 @@ function GotoAPath()
 		IsIdle = false
 		local randomnumber = math.random(1,2)
 		for i,v in pairs(workspace:GetDescendants()) do
-			
-			
-			
+
+
+
 			if v.Name == "Seat" and randomnumber == 1 then
 				NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, v.Position)
 				local Waypoints = NewPath:GetWaypoints()
-				
+
 				for i,waypoint in pairs(Waypoints) do
 					Hum:MoveTo(waypoint.Position)
 					task.wait(0.2)
 				end
-				
+
 				v:Sit(Hum) -- Sit the civilian
 				task.wait(2)
 				game.SoundService["Wow."]:Play()
@@ -122,37 +122,37 @@ function GotoAPath()
 				Hum.Jump = true
 				IsIdle = true
 				break
-				
-				
-				
+
+
+
 			elseif v.Name == "Bed" and randomnumber == 2 then
-				
+
 				NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, v.Position)
 				local Waypoints = NewPath:GetWaypoints()
-				
+
 				for i,waypoint in pairs(Waypoints) do
 					Hum:MoveTo(waypoint.Position)
 					task.wait(0.2)
 				end
 				v:Sit(Hum)
-				AnimTrackSleep:Play() -- Play sleep animation
+				-- Play sleep animation
 				task.wait(2)
 				game.SoundService["Dog Sleeping Meme "]:Play() -- Play Sleeping sound
 				ChatService:Chat(Civilian.Head,"GoodNight ...",Enum.ChatColor.White)
 				task.wait(4)
 				game.SoundService["Dog Sleeping Meme "]:Stop()
-				AnimTrackSleep:Stop()
+
 				Hum.Jump = true
 				IsIdle = true
-				
+
 				break
 			end
 		end
 	end
-	
-	
+
+
 	game.SoundService["Bye - Pizza Place"]:Play() -- Say bye to the players
-	
+
 	IsIdle = true
 end
 
@@ -182,6 +182,30 @@ task.spawn(function()
 		end
 	end
 end)
+
+
+
+
+
+workspace.Bed.Touched:Connect(function(hit)
+
+	local hita = hit.Parent
+	if hita.Parent:IsA("Model") then
+
+		local anim = game.Players:GetPlayerFromCharacter(hita).Character.Humanoid.Animator:LoadAnimation(script.SleepAnimation)
+		
+		game.Players:GetPlayerFromCharacter(hita).Character.Humanoid.Jumping:Connect(function()
+
+			anim:Stop()
+
+		end)
+		
+		anim:Play()	
+	end
+
+
+end)
+
 
 -- Continuous movement loop
 while true do
