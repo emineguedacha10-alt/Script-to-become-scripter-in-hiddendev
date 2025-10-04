@@ -173,6 +173,8 @@ task.spawn(function()
 						end
 					end)
 					ChatService:Chat(Civilian.Head,"Hello ".. player.Name,Enum.ChatColor.White)
+					Civilian.HumanoidRootPart.AudioTextToSpeech.Text = "Hello.."..player.Name
+					Civilian.HumanoidRootPart.AudioTextToSpeech:Play()
 					task.wait(9)
 					cooldown = false
 				end
