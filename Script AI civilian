@@ -194,7 +194,7 @@ workspace.Bed.Touched:Connect(function(hit)
 
 		local anim = hita.Humanoid.Animator:LoadAnimation(script.SleepAnimation)
 		
-		hita.Character.Humanoid.Jumping:Connect(function()
+		hita.Humanoid.Jumping:Connect(function()
 
 			anim:Stop()
 
@@ -214,4 +214,3 @@ while true do
 		GotoAPath()
 	end)
 end
-
