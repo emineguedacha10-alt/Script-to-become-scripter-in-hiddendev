@@ -24,6 +24,9 @@ local Wayparts = workspace.Wayparts:GetChildren()
 -- NPC state
 local IsIdle = true
 
+
+
+
 -- Random chat phrases
 local phrases = {
 	"Hmm... where should I go next?",
@@ -35,6 +38,9 @@ local phrases = {
 	"Maybe I should sit for a while."
 }
 
+
+
+
 -- Function to turn the NPC toward a player
 function Turn(player)
 	local Tween = TweenService:Create(
@@ -44,6 +50,8 @@ function Turn(player)
 	)
 	Tween:Play()
 end
+
+
 
 -- Create path with forbidden zones
 local NewPath = PathService:CreatePath({
@@ -56,6 +64,8 @@ function GotoAPath()
 
 	-- Calculate a random target position
 	local targetPos = Wayparts[math.random(1,#Wayparts)].Position + Vector3.new(math.random(1,5),0,math.random(1,5))
+	
+	
 	NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, targetPos)
 	IsIdle = false
 
@@ -92,23 +102,34 @@ function GotoAPath()
 		IsIdle = false
 		local randomnumber = math.random(1,2)
 		for i,v in pairs(workspace:GetDescendants()) do
+			
+			
+			
 			if v.Name == "Seat" and randomnumber == 1 then
 				NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, v.Position)
 				local Waypoints = NewPath:GetWaypoints()
+				
 				for i,waypoint in pairs(Waypoints) do
 					Hum:MoveTo(waypoint.Position)
 					task.wait(0.2)
 				end
+				
 				v:Sit(Hum) -- Sit the civilian
 				task.wait(2)
+				game.SoundService["Wow."]:Play()
 				ChatService:Chat(Civilian.Head,"What a beautiful day... 😊",Enum.ChatColor.Green)
 				task.wait(4)
 				Hum.Jump = true
 				IsIdle = true
 				break
+				
+				
+				
 			elseif v.Name == "Bed" and randomnumber == 2 then
+				
 				NewPath:ComputeAsync(Civilian.HumanoidRootPart.Position, v.Position)
 				local Waypoints = NewPath:GetWaypoints()
+				
 				for i,waypoint in pairs(Waypoints) do
 					Hum:MoveTo(waypoint.Position)
 					task.wait(0.2)
@@ -123,11 +144,15 @@ function GotoAPath()
 				AnimTrackSleep:Stop()
 				Hum.Jump = true
 				IsIdle = true
+				
 				break
 			end
 		end
 	end
-
+	
+	
+	game.SoundService["Bye - Pizza Place"]:Play() -- Say bye to the players
+	
 	IsIdle = true
 end
 
